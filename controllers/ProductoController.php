@@ -27,7 +27,15 @@
                     $producto = new Producto();
                     $producto->setDescripcion($descripcion);
                     $producto->setPrecio($precio);
-                    $save = $producto->save();
+
+                    if(isset($_GET['idProducto'])){
+                        $id = $_GET['idProducto'];
+                        $producto->setIdProducto($id);
+                        $save = $producto->edit();
+                    }else{
+                        $save = $producto->save();
+                    }
+                              
 
                     if($save){
                         $_SESSION['producto'] = "complete";
@@ -39,6 +47,39 @@
                 }
             }else{
                 $_SESSION['producto'] = 'failed';
+            }
+            header('Location:'.base_url.'producto/gestion');
+        }
+
+        public function editar(){
+            if(isset($_GET['idProducto'])){  
+            
+            $idProducto = $_GET['idProducto'];
+            $edit = true;
+            $producto = new Producto();
+            $producto->setIdProducto($idProducto);
+            $pro = $producto->getOne();
+            require_once 'view/producto/crear.php';
+            }else{
+                header('Location:'.base_url.'producto/gestion');
+            }
+            
+        }
+
+        public function eliminar(){
+            if(isset($_GET['idProducto'])){
+                $idProducto = $_GET['idProducto'];
+                $producto = new Producto();
+                $producto->setIdProducto($idProducto);
+
+                $delete = $producto->delete();
+                if($delete){
+                    $_SESSION['delete'] = "complete";
+                }else{
+                    $_SESSION['delete'] = "failed";
+                }
+            }else{
+                $_SESSION['delete'] = "failed";
             }
             header('Location:'.base_url.'producto/gestion');
         }

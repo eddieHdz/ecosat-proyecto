@@ -9,6 +9,7 @@
                     <input type="password" name="password">
                     <input type="submit" value="Enviar">
                 </form>
+                <a href="<?=base_url?>usuario/registro">Registrarse</a>
                 <?php else: ?>
                     <h3><?=$_SESSION['identity']->nombre ?></h3>
                 <?php endif; ?>

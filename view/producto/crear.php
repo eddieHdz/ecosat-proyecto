@@ -1,11 +1,17 @@
-<h1>Crear nuevo producto</h1>
+<?php if(isset($edit) && isset($pro) && is_object($pro)): ?>
+    <h1>Editar producto <?=$pro->descripcion ?></h1>
+    <?php $url_action = base_url."producto/save&idProducto=".$pro->idProducto; ?>
+<?php else: ?>
+    <h1>Crear nuevo producto</h1>
+    <?php $url_action = base_url."producto/save"; ?>
+<?php endif; ?>
 
-<form action="<?=base_url?>producto/save" method="POST">
+<form action="<?=$url_action?>" method="POST">
     <label for="descripcion">Nombre</label>
-    <input type="text" name="descripcion">
+    <input type="text" name="descripcion" value="<?=isset($pro)&&is_object($pro)? $pro->descripcion : ''; ?>">
 
     <label for="precio">Precio</label>
-    <input type="text" name="precio">
+    <input type="text" name="precio" value="<?=isset($pro)&&is_object($pro)? $pro->precio : ''; ?>">
 
     <label for="departamento">Departamento</label>
     <select name="departamento" id="departamento">
